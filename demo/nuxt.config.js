@@ -28,7 +28,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vueFunctionApi'
+    '~/plugins/vueFunctionApi',
+    '~/plugins/apolloBoost',
   ],
   /*
   ** Nuxt.js dev-modules
