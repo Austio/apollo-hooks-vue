@@ -8,8 +8,16 @@
 
 <script>
   import { value, computed, watch, onMounted } from 'vue-function-api'
+  import gql from 'graphql-tag';
 
   export default {
+    mounted() {
+      this.$apollo.query({
+        query: gql`{ message }`,
+      })
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+    },
     setup() {
       // reactive state
       const count = value(0);

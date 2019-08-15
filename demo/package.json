@@ -13,6 +13,7 @@
   "dependencies": {
     "apollo-boost": "^0.4.4",
     "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
     "nuxt": "^2.0.0",
     "vue-function-api": "^2.1.2"
   },
