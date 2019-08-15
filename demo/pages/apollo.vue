@@ -1,8 +1,7 @@
 <template>
   <div>
-    <span>count is {{ count }}</span>
-    <span>plusOne is {{ plusOne }}</span>
-    <button @click="increment">count++</button>
+    <span>Message {{ message }}</span>
+    <button @click="update">update Message to foo</button>
   </div>
 </template>
 
@@ -11,38 +10,37 @@
   import gql from 'graphql-tag';
 
   export default {
-    mounted() {
-      this.$apollo.query({
-        query: gql`{ message }`,
-      })
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
+    data() {
+      return {
+        message: null
+      }
     },
-    setup() {
+    setup(props, context) {
       // reactive state
-      const count = value(0);
+      const message = value(null);
       // computed state
-      const plusOne = computed(() => count.value + 1);
+      // const plusOne = computed(() => count.value + 1);
       // method
-      const increment = () => {
-        count.value++;
-      };
+      // const increment = () => {
+      //   count.value++;
+      // };
       // watch
-      watch(
-        () => count.value * 2,
-        val => {
-          console.log(`count * 2 is ${val}`);
-        }
-      );
+      // watch(
+      //   () => count.value * 2,
+      //   val => {
+      //     console.log(`count * 2 is ${val}`);
+      //   }
+      // );
       // lifecycle
       onMounted(() => {
-        console.log(`mounted`);
+        context.root.$apollo.query({
+          query: gql`{ message }`,
+        })
+          .then(data => this.message = data)
       });
       // expose bindings on render context
       return {
-        count,
-        plusOne,
-        increment,
+        message,
       };
     },
   };
