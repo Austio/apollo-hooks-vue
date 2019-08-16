@@ -1,7 +1,10 @@
 <template>
   <div>
     <span>Message {{ message }}</span>
-    <button @click="updateMessage">update Message to foo</button>
+    <br />
+    <button @click="updateMessage">Change Message to Bar</button>
+    <br />
+    <button @click="getMessage">Get Message Value</button>
   </div>
 </template>
 
@@ -11,36 +14,32 @@
 
   export default {
     setup(props, context) {
-      // reactive state
       const message = value('');
-      // computed state
-      // const plusOne = computed(() => count.value + 1);
-      // method
-      // const increment = () => {
-      //   count.value++;
-      // };
-      // watch
-      // watch(
-      //   () => count.value * 2,
-      //   val => {
-      //     console.log(`count * 2 is ${val}`);
-      //   }
-      // );
-      // lifecycle
+
+      const getMessageGql = gql`{ message }`;
+
+      console.log(getMessageGql)
+      console.log(context.root.$apollo);
+
+      // https://www.apollographql.com/docs/link/links/state/#writequery-and-readquery
       function updateMessage() {
-        message.value = 'foo';
+        context.root.$apollo.writeData({ data: { message: 'bar' } });
       }
 
-      onMounted(() => {
+      function getMessage() {
         context.root.$apollo.query({
-          query: gql`{ message }`,
-        })
-          .then(data => { message.value = data.message })
-      });
+          query: getMessageGql,
+        }).then(data => {
+          message.value = data.data.message
+        });
+      }
+
+      onMounted(getMessage);
       // expose bindings on render context
       return {
         message,
         updateMessage,
+        getMessage,
       };
     },
   };
