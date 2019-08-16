@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>Message {{ message }}</span>
-    <button @click="update">update Message to foo</button>
+    <button @click="updateMessage">update Message to foo</button>
   </div>
 </template>
 
@@ -10,14 +10,9 @@
   import gql from 'graphql-tag';
 
   export default {
-    data() {
-      return {
-        message: null
-      }
-    },
     setup(props, context) {
       // reactive state
-      const message = value(null);
+      const message = value('');
       // computed state
       // const plusOne = computed(() => count.value + 1);
       // method
@@ -32,15 +27,20 @@
       //   }
       // );
       // lifecycle
+      function updateMessage() {
+        message.value = 'foo';
+      }
+
       onMounted(() => {
         context.root.$apollo.query({
           query: gql`{ message }`,
         })
-          .then(data => this.message = data)
+          .then(data => { message.value = data.message })
       });
       // expose bindings on render context
       return {
         message,
+        updateMessage,
       };
     },
   };
