@@ -1,11 +1,14 @@
 <template>
   <div>
-    <div>Apollo Message "{{ message }}"</div>
-    <button @click="setApolloMessage">Update Apollo with Input</button>
-    <button @click="getApolloMessage">Get Message From Apollo</button>
+    <div>Manually Fetched Apollo Message "{{ manualMessage }}"</div>
+    <div>Subscribed Apollo Message "{{ subscribeMessage }}"</div>
+    <button @click="getApolloMessage">Update Manual Apollo Message from Storage</button>
+
+    <button @click="setApolloMessage">mutate Apollo With Form Input</button>
+
     <label>
       Local Message
-      <input v-model="localMessage" />
+      <input v-model="formMessage" />
     </label>
   </div>
 </template>
@@ -16,8 +19,9 @@
 
   export default {
     setup(props, context) {
-      const message = value('');
-      const localMessage = value('');
+      const manualMessage = value('');
+      const formMessage = value('');
+      const subscribeMessage = value('');
 
       const getMessageGql = gql`{ message }`;
 
@@ -26,33 +30,40 @@
 
       // https://www.apollographql.com/docs/link/links/state/#writequery-and-readquery
       function setApolloMessage() {
-        context.root.$apollo.writeData({ data: { message: localMessage.value } });
-        getApolloMessage();
+        context.root.$apollo.writeData({ data: { message: formMessage.value } });
       }
 
       function getApolloMessage() {
         context.root.$apollo.query({
           query: getMessageGql,
         }).then(data => {
-          message.value = data.data.message
+          manualMessage.value = data.data.message
         });
       }
 
       // https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.watchQuery
       // https://www.apollographql.com/docs/react/api/apollo-client/#observablequery-functions
-      function subscribeToQuery() {
+      (function subscribeToQuery() {
         const observableQuery = context.root.$apollo.watchQuery({
           query: getMessageGql
         });
 
-        observableQuery.subscribe()
-      }
+        observableQuery.subscribe({
+          next(result) {
+            subscribeMessage.value = result.data.message;
+          },
+          error() {
+            debugger;
+          }
+        });
+      }());
 
       onMounted(getApolloMessage);
       // expose bindings on render context
       return {
-        message,
-        localMessage,
+        manualMessage,
+        formMessage,
+        subscribeMessage,
         setApolloMessage,
         getApolloMessage,
       };
