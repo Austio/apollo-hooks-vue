@@ -5,7 +5,7 @@
 
       <div class="links">
         <nuxt-link
-          to="/apollo"
+          to="/useQuery"
           class="button--green"
         >
           Check Out Apollo
