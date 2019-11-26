@@ -1,27 +1,28 @@
 <template>
   <div>
-    <span>count is {{ count }}</span>
-    <span>plusOne is {{ plusOne }}</span>
+    <span>count is {{ state.count }}</span>
+    <span>plusOne is {{ state.plusOne }}</span>
     <button @click="increment">count++</button>
   </div>
 </template>
 
 <script>
-  import { value, computed, watch, onMounted } from 'vue-function-api'
+  import { reactive, computed, watch, onMounted } from '@vue/composition-api'
 
   export default {
     setup() {
-      // reactive state
-      const count = value(0);
-      // computed state
-      const plusOne = computed(() => count.value + 1);
-      // method
+      const state = reactive({
+        count: 0,
+        plusOne: computed(() => state.count + 1),
+      });
+
       const increment = () => {
-        count.value++;
+        state.count++;
       };
+
       // watch
       watch(
-        () => count.value * 2,
+        () => state.count.value * 2,
         val => {
           console.log(`count * 2 is ${val}`);
         }
@@ -32,8 +33,7 @@
       });
       // expose bindings on render context
       return {
-        count,
-        plusOne,
+        state,
         increment,
       };
     },
