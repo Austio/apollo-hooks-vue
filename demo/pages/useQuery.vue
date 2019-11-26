@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>Manually Fetched Apollo Message "{{ manualMessage }}"</div>
-    <div>Subscribed Apollo Message "{{ data.data.message }}"</div>
+    <div>Manually Fetched Apollo Message "{{ state.manualMessage }}"</div>
+    <div>Subscribed Apollo Message "{{ apolloState.data.data.message }}"</div>
     <button @click="getApolloMessage">Update Manual Apollo Message from Storage</button>
 
     <button @click="setApolloMessage">mutate Apollo With Form Input</button>
@@ -14,13 +14,15 @@
 </template>
 
 <script>
-  import { value, computed, watch, onMounted } from 'vue-function-api'
+  import { reactive, onMounted } from '@vue/composition-api';
   import gql from 'graphql-tag';
 
   function useQuery({ query, context }) {
-    const data = value(null);
-    const error = value(null);
-    const loading = value(true);
+    const apolloState = reactive({
+      data: null,
+      error: null,
+      loading: null
+    });
 
     const q = context.root.$apollo.watchQuery({
       query
@@ -28,47 +30,52 @@
 
     q.subscribe({
       next(result) {
-        data.value = result;
+        apolloState.data.value = result;
       },
       error(error) {
-        error.value = error;
+        apolloState.error.value = error;
       }
     });
 
     return {
-      data,
-      error,
-      loading,
+      state: apolloState,
       query: q,
     }
   }
 
   export default {
     setup(props, context) {
-      const manualMessage = value('');
-      const formMessage = value('');
+      const state = reactive({
+        manualMessage: '',
+        formMessage: '',
+      });
+
       const getMessageGql = gql`{ message }`;
 
       function setApolloMessage() {
-        context.root.$apollo.writeData({ data: { message: formMessage.value } });
+        context.root.$apollo.writeData({
+          data: { message: state.formMessage }
+        });
       }
 
-      const { data, loading, error } = useQuery({ query: getMessageGql, context });
+      const { state: apolloState } = useQuery({
+        query: getMessageGql,
+        context
+      });
 
       function getApolloMessage() {
         context.root.$apollo.query({
           query: getMessageGql,
         }).then(data => {
-          manualMessage.value = data.data.message
+          state.manualMessage.value = data.data.message
         });
       }
 
       onMounted(getApolloMessage);
       // expose bindings on render context
       return {
-        manualMessage,
-        formMessage,
-        data,
+        state,
+        apolloState,
         setApolloMessage,
         getApolloMessage,
       };

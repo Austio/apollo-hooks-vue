@@ -2,27 +2,14 @@
   <div>
       <logo />
       <function />
-      <h1 class="title">
-        demo
-      </h1>
-      <h2 class="subtitle">
-        My fantabulous Nuxt.js project
-      </h2>
+
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
+        <nuxt-link
+          to="/apollo"
           class="button--green"
         >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+          Check Out Apollo
+        </nuxt-link>
       </div>
     </div>
 </template>
