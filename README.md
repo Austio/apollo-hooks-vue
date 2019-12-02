@@ -28,15 +28,19 @@ Vue.use(VueCompositionApi);
 ```
 
 #### Import useQuery
+ATM you have to inject the context into useQuery.
+
+I have also tried this using partial application with provide/inject and wasn't crazy about it.
+
 ```
 import { inject } from '@vue/composition-api';
 import fetchUsers from '~/apollo/queries/fetchUsers.gql';
 export default {
-  setup() {
+  setup(_, context) {
     const {
       result: { loading, data, error },
       helpers: { refetch }
-    } = useQuery({ query: fetchUsers });
+    } = useQuery({ query: fetchUsers, context });
 
     return {
       loading,

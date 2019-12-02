@@ -1,5 +1,11 @@
 const {reactive, toRefs} = require('@vue/composition-api');
 
+function validatePresence(item, itemKey) {
+  if (!item) {
+    throw new TypeError(`You must provide an argument option for ${itemKey} to 'useQuery'`)
+  }
+}
+
 function useQuery({
                     query,
                     context,
@@ -11,6 +17,9 @@ function useQuery({
                     errorPolicy = () => {
                     },
                   }) {
+
+  validatePresence(query, 'query');
+  validatePresence(context, 'context');
 
   const apolloCurrentResult = reactive({
     data: null,
