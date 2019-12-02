@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _37d77d12 = () => interopDefault(import('../pages/apollo.vue' /* webpackChunkName: "pages/apollo" */))
-const _6482bf29 = () => interopDefault(import('../pages/useQuery.vue' /* webpackChunkName: "pages/useQuery" */))
 const _1864d24c = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 Vue.use(Router)
@@ -81,14 +79,6 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
-      path: "/apollo",
-      component: _37d77d12,
-      name: "apollo"
-    }, {
-      path: "/useQuery",
-      component: _6482bf29,
-      name: "useQuery"
-    }, {
       path: "/",
       component: _1864d24c,
       name: "index"

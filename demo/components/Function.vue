@@ -20,13 +20,6 @@
         state.count++;
       };
 
-      // watch
-      watch(
-        () => state.count.value * 2,
-        val => {
-          console.log(`count * 2 is ${val}`);
-        }
-      );
       // lifecycle
       onMounted(() => {
         console.log(`mounted`);
