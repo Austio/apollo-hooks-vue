@@ -1,6 +1,6 @@
 {
   "name": "apollo-hooks-vue",
-  "version": "0.0.1-prealpha-1",
+  "version": "0.0.1-prealpha-2",
   "description": "Initial Look at how to handle apollo hooks in vue",
   "author": "",
   "main": "src/index.js",
