@@ -1,16 +1,16 @@
-import {reactive, toRefs} from '@vue/composition-api';
+const {reactive, toRefs} = require('@vue/composition-api');
 
-export default function useQuery({
-                                   query,
-                                   context,
-                                   skip = false,
-                                   pollInterval,
-                                   notifiyOnNetworkStatusChange = false,
-                                   client = null,
-                                   fetchPolicy = 'network-and-cache',
-                                   errorPolicy = () => {
-                                   },
-                                 }) {
+function useQuery({
+                    query,
+                    context,
+                    skip = false,
+                    pollInterval,
+                    notifiyOnNetworkStatusChange = false,
+                    client = null,
+                    fetchPolicy = 'network-and-cache',
+                    errorPolicy = () => {
+                    },
+                  }) {
 
   const apolloCurrentResult = reactive({
     data: null,
@@ -51,3 +51,5 @@ export default function useQuery({
     }
   }
 }
+
+module.exports = useQuery;
