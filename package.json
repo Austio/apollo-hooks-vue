@@ -1,22 +1,20 @@
 {
-  "name": "vue-apollo-hooks",
-  "version": "0.0.1-prealpha",
+  "name": "apollo-hooks-vue",
+  "version": "0.0.1-prealpha-1",
   "description": "Initial Look at how to handle apollo hooks in vue",
-  "author": "Austin Story",
-  "main": "graphql.js",
+  "author": "",
+  "main": "src/useQuery.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Austio/vue-apollo-hooks.git"
+    "url": "git+https://github.com/Austio/apollo-vue-hooks.git"
   },
-  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Austio/vue-apollo-hooks/issues"
+    "url": "https://github.com/Austio/apollo-vue-hooks/issues"
   },
-  "homepage": "https://github.com/Austio/vue-apollo-hooks#readme",
-  "devDependencies": {
-  }
+  "homepage": "https://github.com/Austio/apollo-vue-hooks#readme",
+  "devDependencies": {}
 }
