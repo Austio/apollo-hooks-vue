@@ -1,4 +1,4 @@
-**Dont use this**
+**Dont use this Repo.  Instead use the vue composition api for apollo**
 
 https://v4.apollo.vuejs.org/guide-composable/setup.html
 
