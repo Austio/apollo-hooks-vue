@@ -1,3 +1,7 @@
+**Dont use this**
+
+https://v4.apollo.vuejs.org/guide-composable/setup.html
+
 # vue-apollo-hooks
 
 This is an example of how we can implement useQuery hooks in a repo.
